@@ -134,9 +134,9 @@ MEDIA_ROOT =  os.path.join(BASE_DIR, "media")
 # celery redis ---------------------------------------------------------
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.live.com'
-EMAIL_HOST_USER = 'shivamrustagi@hotmail.com'
-EMAIL_HOST_PASSWORD = 'michaeljordan123'
+EMAIL_HOST = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 
 REDIS_HOST = 'localhost'
