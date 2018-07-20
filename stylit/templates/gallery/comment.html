@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block bodyblock %}
+<ul class="list-group" id = "box">
+    {% for comment in meme.comments.all %}
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    {{comment.comment}}
+    <span><a href="{% url 'accounts:portfolio' comment.author.username %}" style="text-color:red;">{{comment.author.username}}</a> </span>
+  </li>
+    {% endfor %}
+</ul>
+-----------------------------------------
+
+<form class="form-inline comment_form" id="{{ meme.id }}">
+          {% csrf_token %}
+        <div class="form-row">
+          <div class="col">
+            <input type="text" id="meme" class="form-group" style="width:400px;" placeholder="comment" required>
+          </div>
+          <div class="col">
+            <input type="submit"  class="form-group btn btn-primary">
+          </div>
+        </div>
+        </form>
+
+{% endblock %}
+{{% block scriptblock %}
+<script src="{% static '/gallery/ajaxcomment.js' %}"></script>
+{% endblock %}

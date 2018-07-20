@@ -1,0 +1,2 @@
+redis-server
+celery -A stylit worker -l info

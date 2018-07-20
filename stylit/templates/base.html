@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+
+
+    <title>MemeShare</title>
+</head>
+
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/gallery/index">MemeShare</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'gallery:index' %}">Explore <span class="sr-only">(current)</span></a>
+      </li>
+       {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'accounts:wallview' user.username %}">ON my WALL</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="{% url 'accounts:portfolio' user.username %}">My content</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'gallery:create' %}">CreaTe</a>
+      </li>
+        {% endif %}
+    </ul>
+  </div>
+    {% if not user.is_authenticated %}
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item navbar-right">
+            <a class="nav-link" href = "{%url 'accounts:login'%}">Login</a>
+        </li>
+        <li class="nav-item navbar-right">
+            <a class="nav-link" href = "{%url 'accounts:signup' %}">SignUp</a>
+        </li>
+    </ul>
+    {% else %}
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item navbar-right">
+            <a class="nav-link" href = "{% url 'accounts:logout' %}">LogOut</a>
+        </li>
+        <li class="nav-item navbar-right">
+            <a class="nav-link" href = "#">hello,{{user.username}}</a>
+        </li>
+    </ul>
+    {% endif %}
+
+</nav>
+
+{% block bodyblock %}{% endblock %}
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+
+
+{% block scriptblock %}{% endblock %}
+</html>

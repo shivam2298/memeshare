@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block bodyblock %}
+
+<div class="jumbotron jumbotron-fluid" style="margin-top:20px;">
+  <div class="container">
+    <h1 class="display-4">
+      {% if user.is_authenticated and user.username == name%}
+        Hi,</br>
+        {% endif %}
+        <span style="color:red;">{{ profile_user.username }} </span>
+        <div style="float:right">
+            following : <span class="following"> {{ profile_user.profile.following.all.count }}</span> | followers : <span class="followers"> {{ profile_user.followers.count }}</span>
+        </div>
+    </h1>
+      <button class="lead btn-lg btn-success" style="float:left;"><a class = "followbtn" href="{% url 'accounts:follow' profile_user.username %}">{% if user.is_authenticated and profile_user in user.profile.following.all %}Unfollow{% else %} Follow {% endif %}</a></button>
+  </div>
+</div>
+
+{% if not memes %}
+Whhhhhaaaat???
+you haven't created any thing
+{% endif %}
+
+ <div class="container-fluid" style="margin-top:25px;">
+
+<div class="row">
+{% for meme in memes %}
+<div class="col-xs-6 col-md-3">
+    <div class="card">
+  <img class="card-img-top" src="{{ meme.image.url }}">
+  <div class="card-block">
+      <p class="card-title"><a href="{% url 'accounts:portfolio' meme.author.username %}"> @{{meme.author.username }} </a> |   {{ meme.created_at|timesince}} ago</p>
+    <p class="card-text" style="margin-top:2px;text-color:white;">{{ meme.caption }}</p>
+    <p>
+      <button class="btn btn-sm card-text"><a class="likebtn" href="{% url 'gallery:like' meme.id %}">{% if user.is_authenticated and user in meme.like.all %}Unlike {% else %} Like {% endif %}({{meme.like.count}})</a></button>
+      <button class="btn btn-sm card-text"><a href="{% url 'gallery:commentpage' meme.id %}">discuss</a> </button>
+  </p>
+
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+
+
+{% endblock %}
+{% block scriptblock %}
+<script src="{% static '/gallery/ajaxlikebtn.js' %}"></script>
+<script src="{% static '/accounts/ajaxfollowbutton.js' %}"></script>
+{% endblock %}

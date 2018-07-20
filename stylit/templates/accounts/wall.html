@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block bodyblock %}
+{% if not memes %}
+you are not following anyone
+{% endif %}
+ <div class="container-fluid" style="margin-top:25px;">
+
+<div class="row">
+{% for meme in memes %}
+<div class="col-xs-6 col-md-3">
+    <div class="card">
+  <img class="card-img-top" src="{{ meme.image.url }}">
+  <div class="card-block">
+    <p class="card-title"><a href="{% url 'accounts:portfolio' meme.author.username %}"> @{{meme.author.username }}</a>  |   {{ meme.created_at|timesince}} ago</p>
+    <p class="card-text" style="margin-top:2px;text-color:white;">{{ meme.caption }}</p>
+    <p>
+      <button class="btn btn-sm card-text"><a class="likebtn" href="{% url 'gallery:like' meme.id %}">{% if user.is_authenticated and user in meme.like.all %}Unlike {% else %} Like {% endif %}({{meme.like.count}})</a></button>
+      <button class="btn btn-sm card-text"><a href="{% url 'gallery:commentpage' meme.id %}">discuss</a> </button>
+  </p>
+
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+</div>
+
+
+{% endblock %}
+{% block scriptblock %}
+<script src="{% static '/gallery/ajaxlikebtn.js' %}"></script>
+{% endblock %}
